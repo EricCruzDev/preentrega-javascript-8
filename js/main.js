@@ -7,11 +7,17 @@ class Producto {
     }
 }
 
-const producto1 = new Producto("Pan", 1500, "Alimentos", 10);
-const producto2 = new Producto("Leche", 1200, "Lácteos", 8);
-const producto3 = new Producto("Arroz", 1800, "Alimentos", 15);
+const productosIniciales = [
+    new Producto("Pan", 1500, "Alimentos", 10),
+    new Producto("Leche", 1200, "Lácteos", 8),
+    new Producto("Arroz", 1800, "Alimentos", 15)
+];
 
-const productos = [producto1, producto2, producto3];
+let productos = JSON.parse(localStorage.getItem("productos")) ?? productosIniciales;
+
+function guardarStorage() {
+    localStorage.setItem("productos", JSON.stringify(productos));
+}
 
 const listaProductos = document.querySelector("#listaProductos");
 
