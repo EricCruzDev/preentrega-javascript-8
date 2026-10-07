@@ -24,19 +24,24 @@ const listaProductos = document.querySelector("#listaProductos");
 function mostrarProductos(lista) {
     listaProductos.innerHTML = "";
 
-    lista.forEach((producto) => {
-        listaProductos.innerHTML += `
-            <article class="producto">
-                <h3>${producto.nombre}</h3>
-                <p>Precio: $${producto.precio}</p>
-                <p>Categoría: ${producto.categoria}</p>
-                <p>Stock: ${producto.stock}</p>
-                <button class="btn-eliminar" data-nombre="${producto.nombre}">
-                    Eliminar
-                </button>
-            </article>
-        `;
-    });
+    lista.length === 0
+        ? (listaProductos.innerHTML = "<p>No hay productos para mostrar.</p>")
+        : lista.forEach((producto) => {
+            // REQUISITO: Destructuring de propiedades del objeto
+            const { nombre, precio, categoria, stock } = producto;
+
+            listaProductos.innerHTML += `
+                <article class="producto">
+                    <h3>${nombre}</h3>
+                    <p>Precio: $${precio}</p>
+                    <p>Categoría: ${categoria}</p>
+                    <p>Stock: ${stock}</p>
+                    <button class="btn-eliminar" data-nombre="${nombre}">
+                        Eliminar
+                    </button>
+                </article>
+            `;
+        });
 }
 
 mostrarProductos(productos);
