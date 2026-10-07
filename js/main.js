@@ -58,34 +58,38 @@ const mensaje = document.querySelector("#mensaje");
 formularioProducto.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const nombre = nombreInput.value;
+    const nombre = nombreInput.value.trim();
     const precio = Number(precioInput.value);
-    const categoria = categoriaInput.value;
+    const categoria = categoriaInput.value.trim();
     const stock = Number(stockInput.value);
 
-    const nuevoProducto = new Producto(
-        nombre,
-        precio,
-        categoria,
-        stock
-    );
+    const esValido = (nombre && categoria && !isNaN(precio) && !isNaN(stock)) ? true : false;
+
+    if (!esValido) {
+        mensaje.textContent = "Por favor, completa todos los campos correctamente.";
+        return;
+    }
+
+    const nuevoProducto = new Producto(nombre, precio, categoria, stock);
 
     productos.push(nuevoProducto);
 
+    guardarStorage();
+
     mostrarProductos(productos);
-
     mensaje.textContent = "Producto agregado correctamente.";
-
     formularioProducto.reset();
 });
 
-function eliminarProducto(nombre) {
-    const indice = productos.findIndex(
-        (producto) => producto.nombre === nombre
-    );
+function eliminarProducto(nombreEliminar) {
+    // REQUISITO: Destructuring en callback
+    const indice = productos.findIndex(({ nombre }) => nombre === nombreEliminar);
 
     if (indice !== -1) {
         productos.splice(indice, 1);
+
+        guardarStorage();
+
         mostrarProductos(productos);
         mensaje.textContent = "Producto eliminado correctamente.";
     }
