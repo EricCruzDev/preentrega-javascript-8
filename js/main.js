@@ -27,7 +27,6 @@ function mostrarProductos(lista) {
     lista.length === 0
         ? (listaProductos.innerHTML = "<p>No hay productos para mostrar.</p>")
         : lista.forEach((producto) => {
-            // REQUISITO: Destructuring de propiedades del objeto
             const { nombre, precio, categoria, stock } = producto;
 
             listaProductos.innerHTML += `
@@ -82,7 +81,6 @@ formularioProducto.addEventListener("submit", (event) => {
 });
 
 function eliminarProducto(nombreEliminar) {
-    // REQUISITO: Destructuring en callback
     const indice = productos.findIndex(({ nombre }) => nombre === nombreEliminar);
 
     if (indice !== -1) {
